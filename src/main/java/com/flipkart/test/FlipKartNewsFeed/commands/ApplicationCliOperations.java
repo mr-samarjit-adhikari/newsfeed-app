@@ -1,6 +1,7 @@
 package com.flipkart.test.FlipKartNewsFeed.commands;
 
 import com.flipkart.test.FlipKartNewsFeed.helper.ShellHelper;
+import com.flipkart.test.FlipKartNewsFeed.service.UserService;
 import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -19,16 +20,20 @@ import org.springframework.shell.standard.ShellMethodAvailability;
 public class ApplicationCliOperations {
     private ShellHelper helper;
     private AuthenticationManager authenticationManager;
+    private UserService userService;
 
     public ApplicationCliOperations(@Lazy@Autowired ShellHelper shellHelper,
-                                    @Autowired AuthenticationManager authManager){
+                                    @Autowired AuthenticationManager authManager,
+                                    @Autowired UserService userService){
         this.helper = shellHelper;
         this.authenticationManager = authManager;
+        this.userService = userService;
     }
 
     @ShellMethod(value="A user can signup to the system")
     public void signup(@Size(min=1,max=255) String username, @Size(min = 1,max=16) String password){
-
+        userService.register(username,password);
+        helper.print("Successfully register a user with username:"+username);
     }
 
     @ShellMethod(value="A user will be able to login to the system")

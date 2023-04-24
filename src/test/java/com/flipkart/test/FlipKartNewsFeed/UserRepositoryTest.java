@@ -1,6 +1,6 @@
 package com.flipkart.test.FlipKartNewsFeed;
 
-import com.flipkart.test.FlipKartNewsFeed.repositories.User;
+import com.flipkart.test.FlipKartNewsFeed.repositories.entities.User;
 import com.flipkart.test.FlipKartNewsFeed.repositories.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
