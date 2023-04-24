@@ -22,34 +22,33 @@ public class UserComment {
     private String text;
     private Timestamp timestamp;
     private UserVote userVote;
+    //comment owner
+    @ManyToOne
+    @JoinColumn(name="owner_id")
+    private User owner;
+
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="first_comment_id")
     private UserComment firstComment;
     @OneToMany(mappedBy = "firstComment")
     private Set<UserComment> replies;
 
+    //for hibernate
+    public UserComment(){}
+    public UserComment(String comment_text,Timestamp ts){
+        this.text = comment_text;
+        this.timestamp = ts;
+    }
     public long getCommentId() {
         return commentId;
-    }
-
-    public void setCommentId(long commentId) {
-        this.commentId = commentId;
     }
 
     public String getText() {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public Timestamp getTimestamp() {
         return timestamp;
-    }
-
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
     }
 
     public UserVote getUserVote() {
@@ -72,7 +71,11 @@ public class UserComment {
         return replies;
     }
 
-    public void setReplies(Set<UserComment> replies) {
-        this.replies = replies;
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }

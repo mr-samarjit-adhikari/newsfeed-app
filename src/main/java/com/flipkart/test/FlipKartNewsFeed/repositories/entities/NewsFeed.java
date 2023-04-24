@@ -14,31 +14,29 @@ import java.util.Set;
 
 @Entity
 @Table(name="news_posts")
-public class NewsPost {
+public class NewsFeed {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long postId;
     private String text;
+    private UserVote userVote;
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="user_id")
     private User post_owner;
     @OneToMany
     private Set<UserComment> comments;
+    //for hibernate
+    public NewsFeed(){}
 
+    public NewsFeed(String newsPost){
+        this.text = newsPost;
+    }
     public long getPostId() {
         return postId;
     }
 
-    public void setPostId(long postId) {
-        this.postId = postId;
-    }
-
     public String getText() {
         return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     public User getPost_owner() {
@@ -49,11 +47,11 @@ public class NewsPost {
         this.post_owner = post_owner;
     }
 
-    public Set<UserComment> getComments() {
-        return comments;
+    public UserVote getUserVote() {
+        return userVote;
     }
 
-    public void setComments(Set<UserComment> comments) {
-        this.comments = comments;
+    public Set<UserComment> getComments() {
+        return comments;
     }
 }

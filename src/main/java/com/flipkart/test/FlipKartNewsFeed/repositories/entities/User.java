@@ -1,6 +1,5 @@
 package com.flipkart.test.FlipKartNewsFeed.repositories.entities;
 
-import com.flipkart.test.FlipKartNewsFeed.repositories.entities.NewsPost;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,8 +21,8 @@ public class User {
     private long userId;
     private String username;
     private String password;
-    @OneToMany(mappedBy = "post_owner")
-    private Set<NewsPost> newsPosts;
+    @OneToMany(mappedBy = "post_owner",cascade={CascadeType.ALL})
+    private Set<NewsFeed> newsFeeds;
 
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="leader_id")
@@ -31,9 +30,16 @@ public class User {
     @OneToMany(mappedBy = "leader")
     private Set<User> followers= new HashSet<>();
 
+    @OneToMany(mappedBy = "owner")
+    private Set<UserComment> comments;
+
     public User(String username,String password){
         this.username = username;
         this.password = password;
+    }
+
+    public Set<NewsFeed> getNewsFeeds() {
+        return newsFeeds;
     }
 
     public String getUsername() {
@@ -52,15 +58,7 @@ public class User {
         return leader;
     }
 
-    public void setLeader(User leader) {
-        this.leader = leader;
-    }
-
     public Set<User> getFollowers() {
         return followers;
-    }
-
-    public void setFollowers(Set<User> followers) {
-        this.followers = followers;
     }
 }
