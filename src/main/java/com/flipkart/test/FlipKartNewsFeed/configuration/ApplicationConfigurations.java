@@ -1,4 +1,4 @@
-package com.flipkart.test.FlipKartNewsFeed.configurations;
+package com.flipkart.test.FlipKartNewsFeed.configuration;
 
 import org.jline.utils.AttributedString;
 import org.springframework.context.annotation.Configuration;
