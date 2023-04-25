@@ -73,9 +73,8 @@ public class ApplicationCliOperations extends SecureCommand{
             User user = userService.findById(Long.valueOf(userId));
             NewsFeed newsFeed = new NewsFeed(text);
             newsFeed = newsFeedService.persist(newsFeed);
-
-            user.getNewsFeeds().add(newsFeed);
             newsFeed.setPostOwner(user);
+            //save the data
             newsFeedService.persist(newsFeed);
             userService.persist(user);
             helper.print(String.format("User %s added a post with feed-Id:%d",user.getUserName(), newsFeed.getPostId()));

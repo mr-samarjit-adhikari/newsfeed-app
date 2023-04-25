@@ -1,7 +1,7 @@
 package com.flipkart.test.FlipKartNewsFeed.service;
 
 import com.flipkart.test.FlipKartNewsFeed.repositories.entities.User;
-import com.flipkart.test.FlipKartNewsFeed.repositories.DataRepository;
+import com.flipkart.test.FlipKartNewsFeed.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,15 +15,15 @@ import java.util.Set;
 
 @Component
 public class NewsFeedUserDetailsService implements UserDetailsService {
-    private DataRepository dataRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public NewsFeedUserDetailsService(DataRepository dataRepository){
-        this.dataRepository = dataRepository;
+    public NewsFeedUserDetailsService(UserRepository userRepository){
+        this.userRepository = userRepository;
     }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = dataRepository.findByUserName(username);
+        User user = userRepository.findByUserName(username);
         if (user == null) throw new UsernameNotFoundException(username);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
