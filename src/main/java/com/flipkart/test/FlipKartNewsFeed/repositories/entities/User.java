@@ -23,7 +23,7 @@ public class User {
     private String password;
     //for hibernate
     public User(){}
-    @OneToMany(mappedBy = "post_owner",cascade={CascadeType.ALL})
+    @OneToMany(mappedBy = "postOwner",cascade={CascadeType.ALL})
     private Set<NewsFeed> newsFeeds;
 
     @ManyToOne(cascade={CascadeType.ALL})

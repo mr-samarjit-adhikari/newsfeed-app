@@ -24,7 +24,7 @@ public class NewsFeed {
     private UserVote userVote;
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="user_id")
-    private User post_owner;
+    private User postOwner;
     @OneToMany
     private Set<UserComment> comments;
     //for hibernate
@@ -41,12 +41,12 @@ public class NewsFeed {
         return text;
     }
 
-    public User getPost_owner() {
-        return post_owner;
+    public User getPostOwner() {
+        return postOwner;
     }
 
-    public void setPost_owner(User post_owner) {
-        this.post_owner = post_owner;
+    public void setPostOwner(User postOwner) {
+        this.postOwner = postOwner;
     }
 
     public UserVote getUserVote() {
