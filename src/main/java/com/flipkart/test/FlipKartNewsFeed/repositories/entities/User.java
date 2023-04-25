@@ -21,6 +21,8 @@ public class User {
     private long userId;
     private String username;
     private String password;
+    //for hibernate
+    public User(){}
     @OneToMany(mappedBy = "post_owner",cascade={CascadeType.ALL})
     private Set<NewsFeed> newsFeeds;
 
