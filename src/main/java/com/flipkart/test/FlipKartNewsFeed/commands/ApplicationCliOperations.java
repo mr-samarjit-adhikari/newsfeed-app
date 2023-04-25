@@ -75,7 +75,6 @@ public class ApplicationCliOperations extends SecureCommand{
             newsFeed = newsFeedService.persist(newsFeed);
             newsFeed.setPostOwner(user);
             //save the data
-            newsFeedService.persist(newsFeed);
             userService.persist(user);
             helper.print(String.format("User %s added a post with feed-Id:%d",user.getUserName(), newsFeed.getPostId()));
         }catch(Exception e){
@@ -83,17 +82,20 @@ public class ApplicationCliOperations extends SecureCommand{
         }
     }
 
-    @ShellMethod(value="Users can follow other users")
+    @ShellMethod(value="Current logged-in user can follow other user")
     @ShellMethodAvailability("isUserLoggedIn")
-    public void follow(Integer userId,Integer followerId){
+    public void follow(Integer followerId){
         try {
-            User user = userService.findById(Long.valueOf(userId));
-            User follower = userService.findById(Long.valueOf(followerId));
-
-            user.getFollowers().add(follower);
-            userService.persist(user);
-        }catch(AuthenticationException e){
-            helper.print("UserNot found!"+e.getMessage());
+            //get the current user
+            Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();
+            String userName = authentication.getName();
+            User currUser = userService.findByName(userName);
+            User leader = userService.findById(Long.valueOf(followerId));
+            currUser.setLeader(leader);
+            userService.persist(currUser);
+            helper.print(currUser.getUserName()+" Started following user "+leader.getUserName());
+        }catch(Exception e){
+            helper.print("Error occurred. Reason: "+e.getMessage());
         }
     }
 

@@ -60,6 +60,10 @@ public class User {
         return leader;
     }
 
+    public void setLeader(User leader) {
+        this.leader = leader;
+    }
+
     public Set<User> getFollowers() {
         return followers;
     }
