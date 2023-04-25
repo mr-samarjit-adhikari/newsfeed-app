@@ -1,7 +1,7 @@
 package com.flipkart.test.FlipKartNewsFeed;
 
 import com.flipkart.test.FlipKartNewsFeed.repositories.entities.User;
-import com.flipkart.test.FlipKartNewsFeed.repositories.UserRepository;
+import com.flipkart.test.FlipKartNewsFeed.repositories.DataRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +12,13 @@ import static junit.framework.TestCase.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserRepositoryTest {
+public class DataRepositoryTest {
     @Autowired
-    private UserRepository userRepository;
+    private DataRepository dataRepository;
 
     @Test
     public void whenFindingUserById_thenCorrect() {
-        userRepository.save(new User("user", "password"));
-        assertTrue(userRepository.findById(1L).isPresent());
+        dataRepository.save(new User("user", "password"));
+        assertTrue(dataRepository.findById(1L).isPresent());
     }
 }

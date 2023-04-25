@@ -1,7 +1,7 @@
 package com.flipkart.test.FlipKartNewsFeed.service;
 
 import com.flipkart.test.FlipKartNewsFeed.repositories.entities.User;
-import com.flipkart.test.FlipKartNewsFeed.repositories.UserRepository;
+import com.flipkart.test.FlipKartNewsFeed.repositories.DataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -10,11 +10,11 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService{
-    private UserRepository repository;
+    private DataRepository repository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository){
-        this.repository = userRepository;
+    public UserServiceImpl(DataRepository dataRepository){
+        this.repository = dataRepository;
     }
     @Override
     public User register(String username, String password) {
