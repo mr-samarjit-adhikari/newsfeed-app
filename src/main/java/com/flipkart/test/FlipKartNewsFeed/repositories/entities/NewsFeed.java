@@ -25,7 +25,7 @@ public class NewsFeed {
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="user_id")
     private User postOwner;
-    @OneToMany
+    @OneToMany(mappedBy = "feed")
     private Set<UserComment> comments;
     //for hibernate
     public NewsFeed(){}

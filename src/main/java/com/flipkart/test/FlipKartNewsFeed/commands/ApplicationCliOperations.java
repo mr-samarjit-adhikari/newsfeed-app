@@ -54,7 +54,7 @@ public class ApplicationCliOperations extends SecureCommand{
     }
 
     @ShellMethod(value="A user will be able to login to the system")
-    public void login(@Size(min=1,max=255) String username, @Size(min=8,max=16) String password){
+    public void login(@Size(min=1,max=255) String username, @Size(min=1,max=16) String password){
         Authentication request = new UsernamePasswordAuthenticationToken(username,password);
         try{
             Authentication authResult = authenticationManager.authenticate(request);
@@ -107,15 +107,19 @@ public class ApplicationCliOperations extends SecureCommand{
             Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();
             String userName = authentication.getName();
             User currUser = userService.findByName(userName);
+
             //Now find the feed
             NewsFeed newsFeed = newsFeedService.findById(Long.valueOf(feedId));
             UserComment newComment = new UserComment(reply_text, new Timestamp(System.currentTimeMillis()));
             newComment = userCommentService.persist(newComment);
             newComment.setOwner(currUser);
-            newsFeed.getComments().add(newComment);
+            newComment.setFeed(newsFeed);
+
             //now save the data
             newsFeedService.persist(newsFeed);
             userCommentService.persist(newComment);
+            userService.persist(currUser);
+            helper.print("Successfully replied to feed "+feedId);
         }catch(Exception e){
             helper.print("error occurred "+e.getMessage());
         }
@@ -128,6 +132,7 @@ public class ApplicationCliOperations extends SecureCommand{
             //Now find the feed
             NewsFeed newsFeed = newsFeedService.findById(Long.valueOf(feedId));
             newsFeed.getUserVote().upVote();
+            helper.print("Feed "+newsFeed.getPostId()+" got UpVote");
         }catch(Exception e){
             helper.print("error occurred in upvote "+e.getMessage());
         }
@@ -141,6 +146,7 @@ public class ApplicationCliOperations extends SecureCommand{
             NewsFeed newsFeed = newsFeedService.findById(Long.valueOf(feedId));
             newsFeed.getUserVote().downVote();
             newsFeedService.persist(newsFeed);
+            helper.print("Feed "+newsFeed.getPostId()+" got DownVote");
         }catch(Exception e){
             helper.print("error occurred in downvote "+e.getMessage());
         }

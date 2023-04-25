@@ -25,9 +25,13 @@ public class UserComment {
     @Embedded
     private UserVote userVote;
     //comment owner
-    @ManyToOne
+    @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="owner_id")
     private User owner;
+    //comment on feed
+    @ManyToOne(cascade={CascadeType.ALL})
+    @JoinColumn(name="feed_id")
+    private NewsFeed feed;
 
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="first_comment_id")
@@ -75,6 +79,14 @@ public class UserComment {
 
     public User getOwner() {
         return owner;
+    }
+
+    public NewsFeed getFeed() {
+        return feed;
+    }
+
+    public void setFeed(NewsFeed feed) {
+        this.feed = feed;
     }
 
     public void setOwner(User owner) {
