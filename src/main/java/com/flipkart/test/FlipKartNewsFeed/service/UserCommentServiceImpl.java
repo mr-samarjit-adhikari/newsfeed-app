@@ -3,7 +3,9 @@ package com.flipkart.test.FlipKartNewsFeed.service;
 import com.flipkart.test.FlipKartNewsFeed.repositories.UserCommentRepository;
 import com.flipkart.test.FlipKartNewsFeed.repositories.entities.UserComment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserCommentServiceImpl implements UserCommentService{
     private UserCommentRepository commentRepository;
     @Autowired

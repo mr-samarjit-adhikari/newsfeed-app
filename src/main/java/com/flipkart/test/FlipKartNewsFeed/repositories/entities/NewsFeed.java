@@ -1,6 +1,7 @@
 package com.flipkart.test.FlipKartNewsFeed.repositories.entities;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +20,7 @@ public class NewsFeed {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long postId;
     private String text;
+    @Embedded
     private UserVote userVote;
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="user_id")

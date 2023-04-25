@@ -1,6 +1,7 @@
 package com.flipkart.test.FlipKartNewsFeed.repositories.entities;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +22,7 @@ public class UserComment {
     private long commentId;
     private String text;
     private Timestamp timestamp;
+    @Embedded
     private UserVote userVote;
     //comment owner
     @ManyToOne

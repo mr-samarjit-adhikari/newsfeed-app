@@ -17,9 +17,9 @@ public class UserServiceImpl implements UserService{
         this.repository = userRepository;
     }
     @Override
-    public void register(String username, String password) {
+    public User register(String username, String password) {
         User user = new User(username,password);
-        this.repository.save(user);
+        return this.repository.save(user);
     }
 
     @Override

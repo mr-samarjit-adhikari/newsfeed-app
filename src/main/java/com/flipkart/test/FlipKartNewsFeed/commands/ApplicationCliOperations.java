@@ -16,6 +16,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.shell.standard.ShellCommandGroup;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -25,29 +27,31 @@ import java.sql.Timestamp;
 
 @ShellComponent
 @ShellCommandGroup("News-Feed Commands")
-public class ApplicationCliOperations {
+public class ApplicationCliOperations extends SecureCommand{
     private ShellHelper helper;
+    private PasswordEncoder passwordEncoder;
     private AuthenticationManager authenticationManager;
     private UserService userService;
     private NewsFeedService newsFeedService;
     private UserCommentService userCommentService;
 
-    public ApplicationCliOperations(@Lazy@Autowired ShellHelper shellHelper,
-                                    @Autowired AuthenticationManager authManager,
-                                    @Autowired UserService userService,
-                                    @Autowired NewsFeedService feedService,
-                                    @Autowired UserCommentService userCommentService){
+    @Autowired
+    public ApplicationCliOperations(@Lazy ShellHelper shellHelper,
+                                    AuthenticationManager authManager, BCryptPasswordEncoder passwordEncoder,
+                                    UserService userService,NewsFeedService feedService,
+                                    UserCommentService userCommentService){
         this.helper = shellHelper;
         this.authenticationManager = authManager;
         this.userService = userService;
         this.newsFeedService = feedService;
         this.userCommentService = userCommentService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @ShellMethod(value="A user can signup to the system")
     public void signup(@Size(min=1,max=255) String username, @Size(min = 1,max=16) String password){
-        userService.register(username,password);
-        helper.print("Successfully register a user with username:"+username);
+        User signupUser = userService.register(username,passwordEncoder.encode(password));
+        helper.print("Successfully register a user with username:"+username+" and Id:"+signupUser.getId());
     }
 
     @ShellMethod(value="A user will be able to login to the system")
@@ -72,8 +76,8 @@ public class ApplicationCliOperations {
             user.getNewsFeeds().add(newsFeed);
 
             userService.persist(user);
-            helper.print(String.format("User %s added a post with feed-Id:%d",user.getUsername(), newsFeed.getPostId()));
-        }catch(UsernameNotFoundException e){
+            helper.print(String.format("User %s added a post with feed-Id:%d",user.getUserName(), newsFeed.getPostId()));
+        }catch(Exception e){
             helper.print("User not found: "+e.getMessage());
         }
     }

@@ -1,5 +1,8 @@
 package com.flipkart.test.FlipKartNewsFeed.repositories.entities;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public class UserVote {
     private Integer upVoteCount;
     private Integer downVoCount;

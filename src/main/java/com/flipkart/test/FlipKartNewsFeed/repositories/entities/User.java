@@ -19,7 +19,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userId;
-    private String username;
+    private String userName;
     private String password;
     //for hibernate
     public User(){}
@@ -36,7 +36,7 @@ public class User {
     private Set<UserComment> comments;
 
     public User(String username,String password){
-        this.username = username;
+        this.userName = username;
         this.password = password;
     }
 
@@ -44,8 +44,8 @@ public class User {
         return newsFeeds;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
     public String getPassword() {

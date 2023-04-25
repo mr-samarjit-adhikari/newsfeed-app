@@ -28,7 +28,7 @@ public class NewsFeedUserDetailsService implements UserDetailsService {
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         grantedAuthorities.add(new SimpleGrantedAuthority("USER-ROLE")); //given the dummay role
-        return new org.springframework.security.core.userdetails.User(user.getUsername(),
+        return new org.springframework.security.core.userdetails.User(user.getUserName(),
                 user.getPassword(),grantedAuthorities);
     }
 }
