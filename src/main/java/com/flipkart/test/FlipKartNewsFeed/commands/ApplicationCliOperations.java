@@ -76,10 +76,11 @@ public class ApplicationCliOperations extends SecureCommand{
 
             user.getNewsFeeds().add(newsFeed);
             newsFeed.setPostOwner(user);
+            newsFeedService.persist(newsFeed);
             userService.persist(user);
             helper.print(String.format("User %s added a post with feed-Id:%d",user.getUserName(), newsFeed.getPostId()));
         }catch(Exception e){
-            helper.print("User not found: "+e.getMessage());
+            helper.print("Error occurred: "+e.getMessage());
         }
     }
 
