@@ -27,9 +27,9 @@ public class User {
     private Set<NewsFeed> newsFeeds;
 
     @ManyToOne(cascade={CascadeType.ALL})
-    @JoinColumn(name="leader_id")
-    private User leader;
-    @OneToMany(mappedBy = "leader")
+    @JoinColumn(name="followee_id")
+    private User followee;
+    @OneToMany(mappedBy = "followee")
     private Set<User> followers= new HashSet<>();
 
     @OneToMany(mappedBy = "owner")
@@ -56,12 +56,12 @@ public class User {
         return userId;
     }
 
-    public User getLeader() {
-        return leader;
+    public User getFollowee() {
+        return followee;
     }
 
-    public void setLeader(User leader) {
-        this.leader = leader;
+    public void setFollowee(User followee) {
+        this.followee = followee;
     }
 
     public Set<User> getFollowers() {

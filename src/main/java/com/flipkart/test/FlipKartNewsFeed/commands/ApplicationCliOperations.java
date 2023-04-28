@@ -66,17 +66,17 @@ public class ApplicationCliOperations extends SecureCommand{
         }
     }
 
-    @ShellMethod(value="A user can post a feed item")
+    @ShellMethod(value="A logged-in user can post a feed item")
     @ShellMethodAvailability("isUserLoggedIn")
-    public void post(Integer userId,String text){
+    public void post(String post_text){
         try{
-            User user = userService.findById(Long.valueOf(userId));
-            NewsFeed newsFeed = new NewsFeed(text);
+            User currUser = findCurrLoggedInUser();
+            NewsFeed newsFeed = new NewsFeed(post_text);
             newsFeed = newsFeedService.persist(newsFeed);
-            newsFeed.setPostOwner(user);
+            newsFeed.setPostOwner(currUser);
             //save the data
-            userService.persist(user);
-            helper.print(String.format("User %s added a post with feed-Id:%d",user.getUserName(), newsFeed.getPostId()));
+            userService.persist(currUser);
+            helper.print(String.format("User %s added a post with feed-Id:%d",currUser.getUserName(), newsFeed.getPostId()));
         }catch(Exception e){
             helper.print("Error occurred: "+e.getMessage());
         }
@@ -87,13 +87,11 @@ public class ApplicationCliOperations extends SecureCommand{
     public void follow(Integer followerId){
         try {
             //get the current user
-            Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();
-            String userName = authentication.getName();
-            User currUser = userService.findByName(userName);
-            User leader = userService.findById(Long.valueOf(followerId));
-            currUser.setLeader(leader);
+            User currUser = findCurrLoggedInUser();
+            User followee = userService.findById(Long.valueOf(followerId));
+            currUser.setFollowee(followee);
             userService.persist(currUser);
-            helper.print(currUser.getUserName()+" Started following user "+leader.getUserName());
+            helper.print(currUser.getUserName()+" Started following user "+followee.getUserName());
         }catch(Exception e){
             helper.print("Error occurred. Reason: "+e.getMessage());
         }
@@ -104,9 +102,7 @@ public class ApplicationCliOperations extends SecureCommand{
     public void reply(Integer feedId,String reply_text){
         try{
             //get the current user
-            Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();
-            String userName = authentication.getName();
-            User currUser = userService.findByName(userName);
+            User currUser = findCurrLoggedInUser();
 
             //Now find the feed
             NewsFeed newsFeed = newsFeedService.findById(Long.valueOf(feedId));
@@ -152,9 +148,19 @@ public class ApplicationCliOperations extends SecureCommand{
         }
     }
 
-    @ShellMethod(value="Any user can read his news feed")
+    @ShellMethod(value="Shows the news feed for a current logged-in user")
     @ShellMethodAvailability("isUserLoggedIn")
-    public void shownewsfeed(Integer userId){
+    public void shownewsfeed(){
+        //get the current user
+        User currUser = findCurrLoggedInUser();
 
+
+    }
+
+    private User findCurrLoggedInUser() throws RuntimeException{
+        Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
+        User currUser = userService.findByName(userName);
+        return currUser;
     }
 }

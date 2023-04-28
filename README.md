@@ -6,7 +6,7 @@
 ![img.png](img.png)
 
 # Schema Diagram
-![img_7.png](img_7.png)
+![img_8.png](img_8.png)
 
 # Screenshots
 ![img_3.png](img_3.png)
