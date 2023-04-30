@@ -1,9 +1,9 @@
 package com.flipkart.test.FlipKartNewsFeed.commands;
 
 import com.flipkart.test.FlipKartNewsFeed.helper.ShellHelper;
-import com.flipkart.test.FlipKartNewsFeed.repositories.entities.NewsFeed;
-import com.flipkart.test.FlipKartNewsFeed.repositories.entities.User;
-import com.flipkart.test.FlipKartNewsFeed.repositories.entities.UserComment;
+import com.flipkart.test.FlipKartNewsFeed.model.entities.NewsFeed;
+import com.flipkart.test.FlipKartNewsFeed.model.entities.User;
+import com.flipkart.test.FlipKartNewsFeed.model.entities.UserComment;
 import com.flipkart.test.FlipKartNewsFeed.service.NewsFeedService;
 import com.flipkart.test.FlipKartNewsFeed.service.UserCommentService;
 import com.flipkart.test.FlipKartNewsFeed.service.UserService;
@@ -23,6 +23,8 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @ShellComponent
 @ShellCommandGroup("News-Feed Commands")
@@ -76,6 +78,7 @@ public class ApplicationCliOperations extends SecureCommand{
             newsFeed.setPostOwner(currUser);
             //save the data
             userService.persist(currUser);
+            newsFeedService.persist(newsFeed);
             helper.print(String.format("User %s added a post with feed-Id:%d",currUser.getUserName(), newsFeed.getPostId()));
         }catch(Exception e){
             helper.print("Error occurred: "+e.getMessage());
@@ -150,11 +153,16 @@ public class ApplicationCliOperations extends SecureCommand{
 
     @ShellMethod(value="Shows the news feed for a current logged-in user")
     @ShellMethodAvailability("isUserLoggedIn")
-    public void shownewsfeed(){
+    public List<String> shownewsfeed(){
         //get the current user
         User currUser = findCurrLoggedInUser();
-
-
+        List<Long> leaderIds = userService.findLeaders(currUser);
+        List<NewsFeed>  newsFeeds = newsFeedService.findPostsByFollowedUsers(leaderIds);
+        List<String> feedList = new ArrayList<>(5);
+        newsFeeds.forEach((feed)->{
+            feedList.add(feed.getText());
+        });
+        return feedList;
     }
 
     private User findCurrLoggedInUser() throws RuntimeException{

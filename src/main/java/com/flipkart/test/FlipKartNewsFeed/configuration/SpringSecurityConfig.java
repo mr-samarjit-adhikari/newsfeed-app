@@ -1,6 +1,6 @@
 package com.flipkart.test.FlipKartNewsFeed.configuration;
 
-import com.flipkart.test.FlipKartNewsFeed.repositories.UserRepository;
+import com.flipkart.test.FlipKartNewsFeed.model.repositories.UserRepository;
 import com.flipkart.test.FlipKartNewsFeed.service.NewsFeedUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

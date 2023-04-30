@@ -1,4 +1,4 @@
-package com.flipkart.test.FlipKartNewsFeed.repositories.entities;
+package com.flipkart.test.FlipKartNewsFeed.model.entities;
 
 import jakarta.persistence.Embeddable;
 

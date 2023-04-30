@@ -1,7 +1,7 @@
 package com.flipkart.test.FlipKartNewsFeed;
 
-import com.flipkart.test.FlipKartNewsFeed.repositories.entities.User;
-import com.flipkart.test.FlipKartNewsFeed.repositories.UserRepository;
+import com.flipkart.test.FlipKartNewsFeed.model.entities.User;
+import com.flipkart.test.FlipKartNewsFeed.model.repositories.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

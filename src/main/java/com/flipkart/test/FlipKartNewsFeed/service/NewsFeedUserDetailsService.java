@@ -1,7 +1,7 @@
 package com.flipkart.test.FlipKartNewsFeed.service;
 
-import com.flipkart.test.FlipKartNewsFeed.repositories.entities.User;
-import com.flipkart.test.FlipKartNewsFeed.repositories.UserRepository;
+import com.flipkart.test.FlipKartNewsFeed.model.entities.User;
+import com.flipkart.test.FlipKartNewsFeed.model.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

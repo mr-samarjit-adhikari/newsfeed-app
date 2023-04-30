@@ -1,7 +1,7 @@
 package com.flipkart.test.FlipKartNewsFeed.service;
 
-import com.flipkart.test.FlipKartNewsFeed.repositories.UserCommentRepository;
-import com.flipkart.test.FlipKartNewsFeed.repositories.entities.UserComment;
+import com.flipkart.test.FlipKartNewsFeed.model.repositories.UserCommentRepository;
+import com.flipkart.test.FlipKartNewsFeed.model.entities.UserComment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
