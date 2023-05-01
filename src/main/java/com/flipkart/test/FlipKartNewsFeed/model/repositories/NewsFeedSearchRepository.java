@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface NewsFeedSearchRepository {
     List<NewsFeed> findPostsByFollowedUsers(List<Long> userIds);
-    List<NewsFeed> findPostsByHighScores();
+    List<NewsFeed> findFirst10PostsByHighScores();
     List<NewsFeed> findPostsByHighComments();
     List<NewsFeed> findPostsByRecentTimestamp();
 }

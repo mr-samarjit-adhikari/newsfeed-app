@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +39,15 @@ public class NewsFeedSearchRepositoryImpl implements NewsFeedSearchRepository{
     }
 
     @Override
-    public List<NewsFeed> findPostsByHighScores() {
+    public List<NewsFeed> findFirst10PostsByHighScores() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<NewsFeed> criteriaQuery = criteriaBuilder.createQuery(NewsFeed.class);
 
-        List<NewsFeed> newsFeeds = entityManager.createQuery(criteriaQuery).getResultList();
+        Root<NewsFeed> root = criteriaQuery.from(NewsFeed.class);
+        Path<Integer> finalScorePath = root.get("userVote").get("finalScore");
+        criteriaQuery.orderBy(criteriaBuilder.desc(finalScorePath));
+
+        List<NewsFeed> newsFeeds = entityManager.createQuery(criteriaQuery).setMaxResults(10).getResultList();
         return newsFeeds;
     }
 

@@ -35,7 +35,7 @@ public class NewsFeedServiceImpl implements NewsFeedService{
 
     @Override
     public List<NewsFeed> findPostsByHighScores() {
-        return feedRepository.findPostsByHighScores();
+        return feedRepository.findFirst10PostsByHighScores();
     }
 
 }

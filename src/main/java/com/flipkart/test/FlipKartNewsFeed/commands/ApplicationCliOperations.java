@@ -166,10 +166,12 @@ public class ApplicationCliOperations extends SecureCommand{
             feedList.add(feed.getText());
         });
         //find News feed by higher vote count
-//        newsFeeds = newsFeedService.findPostsByHighScores();
-//        newsFeeds.forEach((feed)->{
-//            feedList.add(feed.getText());
-//        });
+        if (feedList.size()==0){
+            newsFeeds = newsFeedService.findPostsByHighScores();
+            newsFeeds.forEach((feed)->{
+                feedList.add(feed.getText());
+            });
+        }
 
         return feedList;
     }
