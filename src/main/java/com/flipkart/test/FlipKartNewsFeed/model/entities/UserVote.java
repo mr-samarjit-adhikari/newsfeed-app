@@ -5,22 +5,22 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class UserVote {
     private Integer upVoteCount;
-    private Integer downVoCount;
+    private Integer downVoteCount;
 
     public UserVote(){
         this(0,0);
     }
-    public UserVote(Integer upVoteCount,Integer downVoCount){
+    public UserVote(Integer upVoteCount,Integer downVoteCount){
         this.upVoteCount = upVoteCount;
-        this.downVoCount = downVoCount;
+        this.downVoteCount = downVoteCount;
     }
     public void upVote(){
         this.upVoteCount ++;
     }
     public void downVote(){
-        this.downVoCount ++;
+        this.downVoteCount++;
     }
     public Integer getScore(){
-        return upVoteCount-downVoCount;
+        return upVoteCount- downVoteCount;
     }
 }

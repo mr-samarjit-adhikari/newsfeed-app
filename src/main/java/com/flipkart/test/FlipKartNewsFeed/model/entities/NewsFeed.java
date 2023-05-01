@@ -53,6 +53,10 @@ public class NewsFeed {
         return userVote;
     }
 
+    public void setUserVote(UserVote userVote) {
+        this.userVote = userVote;
+    }
+
     public Set<UserComment> getComments() {
         return comments;
     }

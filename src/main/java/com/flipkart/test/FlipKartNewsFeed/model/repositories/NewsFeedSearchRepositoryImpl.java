@@ -39,7 +39,11 @@ public class NewsFeedSearchRepositoryImpl implements NewsFeedSearchRepository{
 
     @Override
     public List<NewsFeed> findPostsByHighScores() {
-        return null;
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<NewsFeed> criteriaQuery = criteriaBuilder.createQuery(NewsFeed.class);
+
+        List<NewsFeed> newsFeeds = entityManager.createQuery(criteriaQuery).getResultList();
+        return newsFeeds;
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.flipkart.test.FlipKartNewsFeed.helper.ShellHelper;
 import com.flipkart.test.FlipKartNewsFeed.model.entities.NewsFeed;
 import com.flipkart.test.FlipKartNewsFeed.model.entities.User;
 import com.flipkart.test.FlipKartNewsFeed.model.entities.UserComment;
+import com.flipkart.test.FlipKartNewsFeed.model.entities.UserVote;
 import com.flipkart.test.FlipKartNewsFeed.service.NewsFeedService;
 import com.flipkart.test.FlipKartNewsFeed.service.UserCommentService;
 import com.flipkart.test.FlipKartNewsFeed.service.UserService;
@@ -76,6 +77,7 @@ public class ApplicationCliOperations extends SecureCommand{
             NewsFeed newsFeed = new NewsFeed(post_text);
             newsFeed = newsFeedService.persist(newsFeed);
             newsFeed.setPostOwner(currUser);
+            newsFeed.setUserVote(new UserVote());
             //save the data
             userService.persist(currUser);
             newsFeedService.persist(newsFeed);
@@ -131,6 +133,7 @@ public class ApplicationCliOperations extends SecureCommand{
             //Now find the feed
             NewsFeed newsFeed = newsFeedService.findById(Long.valueOf(feedId));
             newsFeed.getUserVote().upVote();
+            newsFeedService.persist(newsFeed);
             helper.print("Feed "+newsFeed.getPostId()+" got UpVote");
         }catch(Exception e){
             helper.print("error occurred in upvote "+e.getMessage());
@@ -162,6 +165,12 @@ public class ApplicationCliOperations extends SecureCommand{
         newsFeeds.forEach((feed)->{
             feedList.add(feed.getText());
         });
+        //find News feed by higher vote count
+//        newsFeeds = newsFeedService.findPostsByHighScores();
+//        newsFeeds.forEach((feed)->{
+//            feedList.add(feed.getText());
+//        });
+
         return feedList;
     }
 

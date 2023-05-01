@@ -8,4 +8,5 @@ public interface NewsFeedService {
     NewsFeed findById(Long Id);
     NewsFeed persist(NewsFeed newsFeed);
     List<NewsFeed> findPostsByFollowedUsers(List<Long> userIds);
+    List<NewsFeed> findPostsByHighScores();
 }
